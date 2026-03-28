@@ -1,5 +1,6 @@
 ﻿using RedRiverTest.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using RedRiverTest.Api.Data;
 
@@ -7,6 +8,7 @@ namespace RedRiverTest.Api.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+   [Authorize]
 	public class BooksController : ControllerBase
 	{
         private readonly AppDbContext _db;
