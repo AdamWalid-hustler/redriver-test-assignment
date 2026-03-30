@@ -29,9 +29,9 @@ builder.Services
        // Check the token on each request.
 		options.TokenValidationParameters = new TokenValidationParameters
 		{
-			ValidateIssuer = false,
+			ValidateIssuer = true,
 			ValidIssuer = jwtOptions.Issuer,
-			ValidateAudience = false,
+			ValidateAudience = true,
 			ValidAudience = jwtOptions.Audience,
 			ValidateIssuerSigningKey = true,
 			IssuerSigningKey = signingKey,
@@ -48,13 +48,13 @@ builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
 // In-memory database for now.
 builder.Services.AddDbContext<RedRiverTest.Api.Data.AppDbContext>(options =>
-	options.UseInMemoryDatabase("AppDb"));
+	options.UseSqlite("Data Source=books.db"));
 
 var app = builder.Build();
-
 using (var scope = app.Services.CreateScope())
 {
 	var db = scope.ServiceProvider.GetRequiredService<RedRiverTest.Api.Data.AppDbContext>();
+    db.Database.Migrate();
 	if (!db.Books.Any())
 	{
        // Seed one book so the list is not empty.
