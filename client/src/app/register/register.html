@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">
+          <i class="fas fa-user-plus me-2"></i>Register
+        </h3>
+
+        @if (error()) {
+          <div class="alert alert-danger">{{ error() }}</div>
+        }
+
+        <form (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              [(ngModel)]="username"
+              name="username"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              [(ngModel)]="password"
+              name="password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-success w-100"
+            [disabled]="loading() || !username || !password"
+          >
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm me-1"></span>
+            }
+            Register
+          </button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+          Already have an account? <a routerLink="/login">Login</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
