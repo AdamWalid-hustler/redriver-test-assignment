@@ -18,10 +18,12 @@ export class Register {
   error = signal('');
   loading = signal(false);
 
+  // Called when user clicks the register button
   onSubmit() {
     this.error.set('');
     this.loading.set(true);
 
+    // Try to register, go to login page on success
     this.auth.register({ username: this.username, password: this.password }).subscribe({
       next: () => {
         this.loading.set(false);

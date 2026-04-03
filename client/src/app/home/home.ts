@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+// Book type matching the API response
 interface Book {
   id: number;
   title: string;
@@ -19,6 +20,7 @@ export class Home implements OnInit {
   books = signal<Book[]>([]);
   error = signal('');
 
+  // Fetch books from API when page loads
   ngOnInit() {
     this.http.get<Book[]>('http://localhost:5268/api/books').subscribe({
       next: (data) => this.books.set(data),

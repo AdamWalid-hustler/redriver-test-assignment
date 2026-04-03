@@ -18,10 +18,12 @@ export class Login {
   error = signal('');
   loading = signal(false);
 
+  // Called when user clicks the login button
   onSubmit() {
     this.error.set('');
     this.loading.set(true);
 
+    // Try to log in, go to home on success
     this.auth.login({ username: this.username, password: this.password }).subscribe({
       next: () => {
         this.loading.set(false);
