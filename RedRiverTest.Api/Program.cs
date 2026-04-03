@@ -50,6 +50,17 @@ builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 builder.Services.AddDbContext<RedRiverTest.Api.Data.AppDbContext>(options =>
 	options.UseSqlite("Data Source=books.db"));
 
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AngularDev", policy =>
+	{
+		policy
+			.WithOrigins("http://localhost:4200")
+			.AllowAnyHeader()
+			.AllowAnyMethod();
+	});
+});
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -78,9 +89,10 @@ if (app.Environment.IsDevelopment())
 	});
 }
 
+app.UseCors("AngularDev");
+
 app.UseHttpsRedirection();
 
-// Read the JWT token from the Authorization header.
 app.UseAuthentication();
 app.UseAuthorization();
 

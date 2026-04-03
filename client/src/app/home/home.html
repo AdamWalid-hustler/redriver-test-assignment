@@ -1,0 +1,23 @@
+<h2 class="mb-3">Books</h2>
+
+@if (error()) {
+  <div class="alert alert-warning">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ error() }}
+  </div>
+} @else if (books().length === 0) {
+  <div class="text-center py-5 text-muted">
+    <div class="spinner-border" role="status"></div>
+    <p class="mt-2">Loading...</p>
+  </div>
+} @else {
+  <div class="list-group">
+    @for (book of books(); track book.id) {
+      <div class="list-group-item">
+        <h5 class="mb-1">{{ book.title }}</h5>
+        <p class="mb-0 text-muted">
+          <i class="fas fa-user me-1"></i>{{ book.author }}
+        </p>
+      </div>
+    }
+  </div>
+}
