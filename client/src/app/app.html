@@ -3,8 +3,14 @@
     <a class="navbar-brand" routerLink="/">
       <i class="fas fa-book me-2"></i>{{ title() }}
     </a>
-    <div>
+    <div class="d-flex align-items-center gap-3">
       @if (auth.isLoggedIn()) {
+        <a routerLink="/" class="btn btn-outline-light btn-sm">
+          <i class="fas fa-book me-1"></i>Books
+        </a>
+        <a routerLink="/my-citations" class="btn btn-outline-light btn-sm">
+          <i class="fas fa-quote-left me-1"></i>My Citations
+        </a>
         <button class="btn btn-outline-light btn-sm" (click)="auth.logout()">
           <i class="fas fa-sign-out-alt me-1"></i>Logout
         </button>
