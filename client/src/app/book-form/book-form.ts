@@ -1,9 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-
-const API = 'http://localhost:5268/api/books';
+import { BookService } from '../services/book.service';
 
 @Component({
   selector: 'app-book-form',
@@ -12,7 +10,7 @@ const API = 'http://localhost:5268/api/books';
   styles: ``,
 })
 export class BookForm implements OnInit {
-  private http = inject(HttpClient);
+  private bookService = inject(BookService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -38,7 +36,7 @@ export class BookForm implements OnInit {
     if (id) {
       this.editId = +id;
       this.loading.set(true);
-      this.http.get<{ id: number; title: string; author: string; publishedDate: string }>(`${API}/${id}`).subscribe({
+      this.bookService.getById(this.editId).subscribe({
         next: (book) => {
           this.title = book.title;
           this.author = book.author;
@@ -66,8 +64,8 @@ export class BookForm implements OnInit {
 
     // Use PUT for edit, POST for new
     const request = this.isEdit
-      ? this.http.put(`${API}/${this.editId}`, body)
-      : this.http.post(API, body);
+      ? this.bookService.update(this.editId!, body)
+      : this.bookService.create(body);
 
     request.subscribe({
       next: () => {

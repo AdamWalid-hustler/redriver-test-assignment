@@ -1,6 +1,15 @@
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { CitationService, Citation } from "../services/citations.service";
+import { forkJoin } from "rxjs";
+
+const DEFAULT_QUOTES = [
+    { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
+    { text: 'In the middle of difficulty lies opportunity.', author: 'Albert Einstein' },
+    { text: 'Talk is cheap. Show me the code.', author: 'Linus Torvalds' },
+    { text: 'The best time to plant a tree was 20 years ago. The second best time is now.', author: 'Chinese Proverb' },
+    { text: 'Simplicity is the soul of efficiency.', author: 'Austin Freeman' },
+];
 
 @Component({
     selector: 'app-my-citations',
@@ -30,8 +39,22 @@ export class Citations implements OnInit {
 
     loadCitations() {
         this.citationService.getAll().subscribe({
-            next: (data) => this.citations.set(data),
+            next: (data) => {
+                if (data.length === 0) {
+                    this.seedDefaults();
+                } else {
+                    this.citations.set(data);
+                }
+            },
             error: (err) => this.error.set(err.status === 401 ? 'Unauthorized - please log in' : 'Failed to load citations'),
+        });
+    }
+
+    private seedDefaults() {
+        const requests = DEFAULT_QUOTES.map(q => this.citationService.create(q));
+        forkJoin(requests).subscribe({
+            next: (created) => this.citations.set(created),
+            error: () => this.error.set('Failed to seed default quotes'),
         });
     }
 
