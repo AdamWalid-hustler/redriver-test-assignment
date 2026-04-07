@@ -7,7 +7,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Railway provides a PORT env var — tell Kestrel to listen on it.
+// Render provides a PORT env var — tell Kestrel to listen on it.
 var port = Environment.GetEnvironmentVariable("PORT");
 if (!string.IsNullOrEmpty(port))
 {

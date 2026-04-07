@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: redrivertest-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: Jwt__SigningKey
+        sync: false  # you'll set this manually in the Render dashboard
+      - key: Jwt__Issuer
+        value: RedRiverTest
+      - key: Jwt__Audience
+        value: RedRiverTest
+      - key: Jwt__ExpirationMinutes
+        value: "60"
+      - key: AllowedOrigins__0
+        value: https://your-angular-app.onrender.com
