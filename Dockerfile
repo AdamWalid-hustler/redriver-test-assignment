@@ -11,6 +11,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# Railway sets PORT env var; ASP.NET reads ASPNETCORE_URLS
+# Render sets PORT env var
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENTRYPOINT ["dotnet", "RedRiverTest.Api.dll"]
