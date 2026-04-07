@@ -100,7 +100,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AngularDev");
 
-app.UseHttpsRedirection();
+// Only redirect to HTTPS in development; Render handles HTTPS at the load balancer.
+if (app.Environment.IsDevelopment())
+{
+	app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -8,7 +8,7 @@ export interface Book {
     publishedDate: string;
 }
 
-const API = 'http://localhost:5268/api/books';
+const API = 'https://redriver-test-assignment.onrender.com/api/books';
 
 @Injectable({ providedIn: 'root' })
 export class BookService {

@@ -18,7 +18,7 @@ interface RegisterRequest {
 }
 
 // Base URL for auth API
-const API = 'http://localhost:5268/api/auth';
+const API = 'https://redriver-test-assignment.onrender.com/api/auth';
 // Key used to store the token in localStorage
 const TOKEN_KEY = 'jwt_token';
 

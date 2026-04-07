@@ -9,7 +9,7 @@ export interface Citation {
 }
 
 // url for my citations
-const API = 'http://localhost:5268/api/my-citations';
+const API = 'https://redriver-test-assignment.onrender.com/api/my-citations';
 
 @Injectable({ providedIn: 'root' })
 export class CitationService {
