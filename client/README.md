@@ -1,59 +1,73 @@
-# Client
+# RedRiverTest — Book & Citation Manager
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.22.
+A full-stack single-page application built with **Angular 20** and **Bootstrap 5** for managing books and personal citations. Users can register, log in, and perform full CRUD operations on books and citations. Built as part of the Red River internship acceptance project.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **JWT Authentication** — Register and log in with token-based auth; protected routes via an Angular route guard and HTTP interceptor.
+- **Book Management** — View, add, edit, and delete books (title, author, published date).
+- **My Citations** — Save, edit, and delete personal quotes/citations. Comes with default starter quotes.
+- **Dark / Light Theme** — Toggle between themes with automatic preference detection and persistence via `localStorage`.
+- **Lazy-Loaded Routes** — Every page is lazy-loaded for fast initial load times.
+- **Responsive UI** — Bootstrap 5 grid and components with Font Awesome icons.
+
+## Tech Stack
+
+| Layer       | Technology                        |
+| ----------- | --------------------------------- |
+| Framework   | Angular 20 (standalone components, signals) |
+| Styling     | Bootstrap 5, SCSS                 |
+| Icons       | Font Awesome 7                    |
+| HTTP        | Angular HttpClient + JWT interceptor |
+| Backend API | .NET Web API (separate project, port 5268) |
+| Testing     | Jasmine + Karma                   |
+
+## Prerequisites
+
+- **Node.js** 18+ and **npm**
+- **Angular CLI** (`npm install -g @angular/cli`)
+- The **.NET backend API** running on `http://localhost:5268` (see the parent `RedRiverTest.Api` project)
+
+## Getting Started
 
 ```bash
+# Install dependencies
+npm install
+
+# Start the dev server
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open [http://localhost:4200](http://localhost:4200) in your browser. The app will hot-reload on file changes.
 
-## Code scaffolding
+## Available Scripts
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Command         | Description                              |
+| --------------- | ---------------------------------------- |
+| `npm start`     | Start the development server             |
+| `npm test`      | Run unit tests with Karma                |
+| `npm run build` | Production build to `dist/`              |
+| `npm run watch` | Build in watch mode (development)        |
 
-```bash
-ng generate component component-name
+## Project Structure
+
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+src/app/
+├── app.ts / app.html          # Root component with navbar
+├── app.routes.ts               # Route definitions (lazy-loaded)
+├── app.config.ts               # App-level providers (router, HTTP, interceptors)
+├── guards/
+│   └── auth.guard.ts           # Redirects unauthenticated users to /login
+├── interceptors/
+│   └── auth.interceptor.ts     # Attaches JWT token to outgoing requests
+├── services/
+│   ├── auth.service.ts         # Login, register, logout, token management
+│   ├── book.service.ts         # Book CRUD operations
+│   ├── citations.service.ts    # Citation CRUD operations
+│   └── theme.service.ts        # Dark/light theme toggle
+├── home/                       # Book list (home page)
+├── book-form/                  # Add / edit book form
+├── my-citations/               # Citation list with inline add/edit
+├── login/                      # Login page
+└── register/                   # Registration page
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
