@@ -72,7 +72,7 @@ namespace RedRiverTest.Api.Controllers
 		[HttpPost]
 		public async Task<ActionResult<Citation>> CreateCitation(Citation citation)
 		{
-            var userId = User.Identity?.Name;
+          var userId = User.Identity?.Name;
 			citation.Id = 0;
             citation.UserId = userId ?? string.Empty;
 			_db.Citations.Add(citation);

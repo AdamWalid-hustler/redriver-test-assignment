@@ -7,6 +7,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Railway provides a PORT env var — tell Kestrel to listen on it.
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+	builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -54,8 +61,10 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AngularDev", policy =>
 	{
+		var origins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+			?? new[] { "http://localhost:4200" };
 		policy
-			.WithOrigins("http://localhost:4200")
+			.WithOrigins(origins)
 			.AllowAnyHeader()
 			.AllowAnyMethod();
 	});
